@@ -103,6 +103,7 @@
     </property>
     <addaction name="actionOpenTestImage"/>
     <addaction name="actionExit"/>
+    <addaction name="actionRestore"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -116,17 +117,36 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenTestImage">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/Resources/icons/images/open.png</normaloff>:/Resources/icons/images/open.png</iconset>
+   </property>
    <property name="text">
     <string>打开测试文件</string>
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/Resources/icons/images/exit.png</normaloff>:/Resources/icons/images/exit.png</iconset>
+   </property>
    <property name="text">
     <string>退出</string>
    </property>
   </action>
+  <action name="actionRestore">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/Resources/icons/images/redo.png</normaloff>:/Resources/icons/images/redo.png</iconset>
+   </property>
+   <property name="text">
+    <string>复原</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

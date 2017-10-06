@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include<QString>
+#include<QImage>
 
 #include <opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
@@ -25,6 +26,21 @@ private slots:
     void on_actionOpenTestImage_triggered();
 
     void on_actionExit_triggered();
+
+    //成员变脸
+    void on_actionRestore_triggered();
+
+public:
+    Mat testImage;
+    Mat destImage;
+
+public:
+    /**
+     * @brief matConverToQImage,将OpenCV图像装换为QImage图像
+     * @param image：OpenCV格式的图像
+     * @return QImage:QImage格式的图像
+     */
+    QImage matConverToQImage(Mat image);
 
 private:
     Ui::MainWindow *ui;

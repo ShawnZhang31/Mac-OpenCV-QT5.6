@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/icons/images/about.png</file>
+        <file>Resources/icons/images/copy.png</file>
+        <file>Resources/icons/images/cut.png</file>
+        <file>Resources/icons/images/exit.png</file>
+        <file>Resources/icons/images/new.png</file>
+        <file>Resources/icons/images/next.png</file>
+        <file>Resources/icons/images/open.png</file>
+        <file>Resources/icons/images/paste.png</file>
+        <file>Resources/icons/images/previous.png</file>
+        <file>Resources/icons/images/redo.png</file>
+        <file>Resources/icons/images/save.png</file>
+        <file>Resources/icons/images/saveAs.png</file>
+        <file>Resources/icons/images/undo.png</file>
+    </qresource>
+</RCC>
