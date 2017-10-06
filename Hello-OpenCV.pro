@@ -19,6 +19,10 @@ HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
 
+QT_CONFIG -= no-pkg-config
+CONFIG  += link_pkgconfig
+PKGCONFIG += opencv
+
 #OpenCV库文件
 INCLUDEPATH +=-I/usr/local/Cellar/opencv/3.3.0_3/include
 INCLUDEPATH +=-I/usr/local/Cellar/opencv/3.3.0_3/include/opencv
