@@ -99,3 +99,9 @@ The program has unexpectedly finished.
 ![Image](Images/Snip20171007_10.png)
 ## 版本说明
 医学数字图像处理中常用的增强、卷积、模板匹配、仿射变换、重映射、分割等功能
+- [x]增强
+- [x]卷积
+- []模板匹配
+- []放射变换
+- []重映射
+- []分割
