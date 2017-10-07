@@ -97,3 +97,5 @@ The program has unexpectedly finished.
 ```
 修复这个问题需要去到:项目->运行->Run Environment下取消DYLD_LIBRARY_PATH的设置：
 ![Image](Images/Snip20171007_10.png)
+## 版本说明
+医学数字图像处理中常用的增强、卷积、模板匹配、仿射变换、重映射、分割等功能
