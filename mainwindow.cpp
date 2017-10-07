@@ -397,9 +397,9 @@ void MainWindow::on_actionTM_SQDIFF_triggered()
 
         //处理结果
         rectangle (img_display,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-                   Scalar::all (0),2,8,0);
+                   Scalar (0,255,255),2,8,0);
         rectangle (result,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-                           Scalar::all (255),2,8,0);
+                           Scalar (0,255,255),2,8,0);
         img_display.copyTo (this->destImage);
         this->setLablePixmapWithMat (ui->dstImage,this->destImage);
     }
@@ -446,9 +446,9 @@ void MainWindow::on_actionTM_SQDIFF_NORMED_triggered()
 
         //处理结果
         rectangle (img_display,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-                   Scalar::all (0),2,8,0);
+                   Scalar (0,255,255),2,8,0);
         rectangle (result,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-                           Scalar::all (255),2,8,0);
+                           Scalar (0,255,255),2,8,0);
         img_display.copyTo (this->destImage);
         this->setLablePixmapWithMat (ui->dstImage,this->destImage);
     }
@@ -495,11 +495,11 @@ void MainWindow::on_actionTM_CCORR_triggered()
 
         //处理结果
         rectangle (img_display,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-                   Scalar::all (0),2,8,0);
+                   Scalar (255,255,0),2,8,0);
 //        rectangle (result,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-//                           Scalar::all (255),2,8,0);
+//                           Scalar (0,255,255),2,8,0);
         img_display.copyTo (this->destImage);
-        this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+        this->setLablePixmapWithMatNoScale (ui->dstImage,this->destImage);
     }
     else
     {
@@ -544,9 +544,9 @@ void MainWindow::on_actionTM_CCORR_NORMED_triggered()
 
         //处理结果
         rectangle (img_display,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-                   Scalar::all (0),2,8,0);
+                   Scalar (0,255,255),2,8,0);
         rectangle (result,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-                           Scalar::all (255),2,8,0);
+                           Scalar (0,255,255),2,8,0);
         img_display.copyTo (this->destImage);
         this->setLablePixmapWithMat (ui->dstImage,this->destImage);
     }
@@ -593,9 +593,9 @@ void MainWindow::on_actionTM_CCOFF_triggered()
 
         //处理结果
         rectangle (img_display,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-                   Scalar::all (0),2,8,0);
+                   Scalar (0,255,255),2,8,0);
         rectangle (result,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-                           Scalar::all (255),2,8,0);
+                           Scalar (0,255,255),2,8,0);
         img_display.copyTo (this->destImage);
         this->setLablePixmapWithMat (ui->dstImage,this->destImage);
     }
@@ -642,9 +642,9 @@ void MainWindow::on_actionTM_CCOEFF_NORMED_triggered()
 
         //处理结果
         rectangle (img_display,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-                   Scalar::all (0),2,8,0);
+                   Scalar (0,255,255),2,8,0);
         rectangle (result,matchLoc,Point(matchLoc.x+templ.cols,matchLoc.y+templ.rows),
-                           Scalar::all (255),2,8,0);
+                           Scalar (0,255,255),2,8,0);
         img_display.copyTo (this->destImage);
         this->setLablePixmapWithMat (ui->dstImage,this->destImage);
     }
