@@ -105,40 +105,40 @@ The program has unexpectedly finished.
         void cv::flip(InputArray src，OutputArray dst, int flipCode)
 
     - 形态学处理
-        - 腐蚀
+        - 腐蚀  
         void cv::erode(InputArray src，OutputArray dst,InputArray kernel，Point anchor=Point(-1,-1),int iterations=1,int borderType=BORDER_CONSTANT,const Scalar&borderValue=morphologyDefaultBorderValue())
-        - 膨胀
+        - 膨胀  
         void cv::dilate(InputArray src,OutputArray dst,InputArray kernel,Point anchor=Point(-1,-1),int iterations=1,int borderType=BORDER_CONSTANT,const Scalar& borderValue=morphologyDefaultBorderValue())
-        - 开运算
+        - 开运算  
         dilate(erode(src))，先腐蚀后膨胀
-        - 闭运算
+        - 闭运算  
         erode(dilate(src)),先膨胀后腐蚀
-        - 形态学梯度
+        - 形态学梯度  
         dilate(src)-erode(src),膨胀图减去腐蚀图
-        - 顶帽
+        - 顶帽  
         src- dilate(erode(src)),原图像减去开运算
-        - 黑帽
+        - 黑帽  
         erode(dilate(src))-src，闭运算减去原图像
     - 滤波
-        - 均值滤波
+        - 均值滤波  
         void cv::blur(InputArray src,OutputArray dst,Size ksize,Point anchor=Point(-1,-1),int borderType=BORDER_DEFAULT)
-        - 方框滤波
+        - 方框滤波  
         void cv::boxFilter(InputArray src,OutputArray dst,int ddepth,Size ksize，Point anchor=Point(-1,-1),bool normalize=true,int borderType=BORDER_DEFAULT)
-        - 高斯滤波
+        - 高斯滤波  
         void cv::GaussianBlur(IntputArray src,OutputArray dst,Size ksize,double sigmaX,double sigmaY=0,int borderType=BORDER_DEFAULT)
-        - 中指滤波
+        - 中指滤波  
         void cv::medianBlur(InputArray src,OutputArray dst,int ksize)
-        - 双边滤波
+        - 双边滤波  
         void cv::bilateralFilter(InputArray src,OutputArray dst,int d,double sigmaColor,double sigmaSpace,int borderType=BORDER_DEFAULT)
     - 缩放
         - 金字塔
-            - 金字塔上采样
+            - 金字塔上采样  
             void cv::pyrUp(InputArray src,OutputArray dst,const Size& dstsize=Size(),int borderType=BORDER_DEFAULT)
-            - 金字塔下采样
+            - 金字塔下采样    
             void cv::pyrDown(InputArray src,OutputArray dst,const Size& dstsize=Size(),int borderType=BORDER_DEFAULT)
-        - resize
+        - resize  
         void cv::resize(InputArray src,OutputArray dst,Size dsize,double fx=0,double fy=0,int interpolation=INTER_LINEAR)
-        - 旋转
+        - 旋转  
         void cv::warpAffine(InputArray src,OutputArray dst,InputArray M,Size dsize,int flags=INTER_LINEAR,int borderMode=BORDER_CONSTANT,const Scalar & borderValue=Scalar())
 
 
