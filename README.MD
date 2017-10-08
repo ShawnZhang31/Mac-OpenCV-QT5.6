@@ -103,5 +103,5 @@ The program has unexpectedly finished.
 - [x] 卷积
 - [x] 模板匹配
 - [x] 放射变换
-- [ ] 重映射
+- [x] 重映射
 - [ ] 分割
