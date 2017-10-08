@@ -721,3 +721,168 @@ void MainWindow::on_actionRotateWrapAffine_triggered()
 
     this->setLablePixmapWithMatNoScale (ui->dstImage,this->destImage);
 }
+
+/**
+ * @brief MainWindow::on_actionRemapCopy_triggered:重映射-复制
+ */
+void MainWindow::on_actionRemapCopy_triggered()
+{
+    //复制
+    //定义映射
+    Mat map_x,map_y;
+    this->destImage.create (this->testImage.cols,this->testImage.rows,this->testImage.type());
+    map_x.create (this->testImage.size(),CV_32FC1);
+    map_y.create (this->testImage.size(),CV_32FC1);
+
+    for(int i=0;i<this->testImage.rows;i++)
+    {
+        for(int j=0;j<this->testImage.cols;j++)
+        {
+            map_x.at<float>(i,j)=j;
+            map_y.at<float>(i,j)=i;
+        }
+    }
+
+    //调用remap
+    remap (this->testImage,this->destImage,map_x,map_y,CV_INTER_LINEAR,BORDER_CONSTANT,Scalar(0,0,0));
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+}
+
+/**
+ * @brief MainWindow::on_actionRemapX_triggered:重映射-X轴翻转
+ */
+void MainWindow::on_actionRemapX_triggered()
+{
+
+    //复制
+    //X轴翻转
+    Mat map_x,map_y;
+    this->destImage.create (this->testImage.cols,this->testImage.rows,this->testImage.type());
+    map_x.create (this->testImage.size(),CV_32FC1);
+    map_y.create (this->testImage.size(),CV_32FC1);
+
+    for(int i=0;i<this->testImage.rows;i++)
+    {
+        for(int j=0;j<this->testImage.cols;j++)
+        {
+            map_x.at<float>(i,j)=testImage.cols-j;
+            map_y.at<float>(i,j)=i;
+        }
+    }
+
+    //调用remap
+    remap (this->testImage,this->destImage,map_x,map_y,CV_INTER_LINEAR,BORDER_CONSTANT,Scalar(0,0,0));
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+}
+
+/**
+ * @brief MainWindow::on_actionRemapY_triggered:重映射-Y轴翻转
+ */
+void MainWindow::on_actionRemapY_triggered()
+{
+    //复制
+    //X轴翻转
+    Mat map_x,map_y;
+    this->destImage.create (this->testImage.cols,this->testImage.rows,this->testImage.type());
+    map_x.create (this->testImage.size(),CV_32FC1);
+    map_y.create (this->testImage.size(),CV_32FC1);
+
+    for(int i=0;i<this->testImage.rows;i++)
+    {
+        for(int j=0;j<this->testImage.cols;j++)
+        {
+            map_x.at<float>(i,j)=j;
+            map_y.at<float>(i,j)=this->testImage.rows-i;
+        }
+    }
+
+    //调用remap
+    remap (this->testImage,this->destImage,map_x,map_y,CV_INTER_LINEAR,BORDER_CONSTANT,Scalar(0,0,0));
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+}
+
+/**
+ * @brief MainWindow::on_actionRemapSmall_triggered:缩小
+ */
+void MainWindow::on_actionRemapSmall_triggered()
+{
+    //复制
+    //缩小
+    Mat map_x,map_y;
+    this->destImage.create (this->testImage.cols,this->testImage.rows,this->testImage.type());
+    map_x.create (this->testImage.size(),CV_32FC1);
+    map_y.create (this->testImage.size(),CV_32FC1);
+
+    for(int i=0;i<this->testImage.rows;i++)
+    {
+        for(int j=0;j<this->testImage.cols;j++)
+        {
+           if(i>this->testImage.rows*0.25&&i<this->testImage.rows*0.75&&j>this->testImage.cols*0.25&&j<this->testImage.cols*0.75)
+           {
+               map_x.at<float>(i,j)=2*(j-this->testImage.cols*0.25)+0.5;
+               map_y.at<float>(i,j)=2*(i-this->testImage.rows*0.25)+0.5;
+           }
+           else
+           {
+            map_x.at<float>(i,j)=0;
+            map_y.at<float>(i,j)=0;
+           }
+        }
+    }
+
+    //调用remap
+    remap (this->testImage,this->destImage,map_x,map_y,CV_INTER_LINEAR,BORDER_CONSTANT,Scalar(0,0,0));
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+}
+
+/**
+ * @brief MainWindow::on_actionRemapRotate_triggered:重映射-旋转
+ */
+void MainWindow::on_actionRemapRotate_triggered()
+{
+    //复制
+    //旋转
+    Mat map_x,map_y;
+    this->destImage.create (this->testImage.cols,this->testImage.rows,this->testImage.type());
+    map_x.create (this->testImage.size(),CV_32FC1);
+    map_y.create (this->testImage.size(),CV_32FC1);
+
+    for(int i=0;i<this->testImage.rows;i++)
+    {
+        for(int j=0;j<this->testImage.cols;j++)
+        {
+           map_x.at<float>(i,j)=this->testImage.cols-j;
+           map_y.at<float>(i,j)=this->testImage.rows-i;
+        }
+    }
+
+    //调用remap
+    remap (this->testImage,this->destImage,map_x,map_y,CV_INTER_LINEAR,BORDER_CONSTANT,Scalar(0,0,0));
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+}
+
+/**
+ * @brief MainWindow::on_actionRemapDiagontal_triggered:重映射-xy轴互换
+ */
+void MainWindow::on_actionRemapDiagontal_triggered()
+{
+    //复制
+    //缩小
+    Mat map_x,map_y;
+    this->destImage.create (this->testImage.cols,this->testImage.rows,this->testImage.type());
+    map_x.create (this->testImage.size(),CV_32FC1);
+    map_y.create (this->testImage.size(),CV_32FC1);
+
+    for(int i=0;i<this->testImage.rows;i++)
+    {
+        for(int j=0;j<this->testImage.cols;j++)
+        {
+           map_x.at<float>(i,j)=i;
+           map_y.at<float>(i,j)=j;
+        }
+    }
+
+    //调用remap
+    remap (this->testImage,this->destImage,map_x,map_y,CV_INTER_LINEAR,BORDER_CONSTANT,Scalar(0,0,0));
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+}

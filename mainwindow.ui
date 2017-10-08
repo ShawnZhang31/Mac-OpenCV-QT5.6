@@ -141,11 +141,23 @@
     <addaction name="actionWrapAffine"/>
     <addaction name="actionRotateWrapAffine"/>
    </widget>
+   <widget class="QMenu" name="menu_6">
+    <property name="title">
+     <string>重映射</string>
+    </property>
+    <addaction name="actionRemapCopy"/>
+    <addaction name="actionRemapX"/>
+    <addaction name="actionRemapY"/>
+    <addaction name="actionRemapSmall"/>
+    <addaction name="actionRemapRotate"/>
+    <addaction name="actionRemapDiagontal"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
    <addaction name="menu_3"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
+   <addaction name="menu_6"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Open_TestImage">
@@ -256,6 +268,36 @@
   <action name="actionRotateWrapAffine">
    <property name="text">
     <string>旋转仿射</string>
+   </property>
+  </action>
+  <action name="actionRemapCopy">
+   <property name="text">
+    <string>复制</string>
+   </property>
+  </action>
+  <action name="actionRemapX">
+   <property name="text">
+    <string>X轴</string>
+   </property>
+  </action>
+  <action name="actionRemapY">
+   <property name="text">
+    <string>Y轴</string>
+   </property>
+  </action>
+  <action name="actionRemapSmall">
+   <property name="text">
+    <string>缩小</string>
+   </property>
+  </action>
+  <action name="actionRemapRotate">
+   <property name="text">
+    <string>旋转</string>
+   </property>
+  </action>
+  <action name="actionRemapDiagontal">
+   <property name="text">
+    <string>XY轴互换</string>
    </property>
   </action>
  </widget>

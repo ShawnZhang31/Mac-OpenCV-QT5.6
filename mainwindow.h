@@ -71,6 +71,18 @@ private slots:
 
     void on_actionRotateWrapAffine_triggered();
 
+    void on_actionRemapCopy_triggered();
+
+    void on_actionRemapX_triggered();
+
+    void on_actionRemapY_triggered();
+
+    void on_actionRemapSmall_triggered();
+
+    void on_actionRemapRotate_triggered();
+
+    void on_actionRemapDiagontal_triggered();
+
 public:
     Mat testImage;
     Mat destImage;
