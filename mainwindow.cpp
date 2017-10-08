@@ -653,3 +653,71 @@ void MainWindow::on_actionTM_CCOEFF_NORMED_triggered()
         this->showWarningMessageBox (tr("错误"),tr("选择的模板文件无效！"));
     }
 }
+
+/**
+ * @brief MainWindow::on_actionWrapAffine_triggered:单纯仿射
+ */
+void MainWindow::on_actionWrapAffine_triggered()
+{
+    //单纯仿射
+    Point2f srcTri[3];
+    Point2f dstTri[3];
+    Mat rot_mat(2,3,CV_32FC1);
+    Mat warp_mat(2,3,CV_32FC1);
+    Mat src,warp_dst,warp_rotate_dst;
+    //读取图像
+    this->testImage.copyTo (src);
+    warp_dst=Mat::zeros (src.rows,src.cols,src.type ());
+    //用3个点确定A仿射变换
+    srcTri[0]=Point2f(0,0);
+    srcTri[1]=Point2f(src.cols-1,0);
+    srcTri[2]=Point2f(0,src.rows-1);
+    dstTri[0]=Point2f(src.cols*0.0,src.rows*0.33);
+    dstTri[1]=Point2f(src.cols*0.85,src.rows*0.25);
+    dstTri[2]=Point2f(src.cols*0.15,src.rows*0.7);
+    warp_mat=getAffineTransform (srcTri,dstTri);
+    warpAffine (src,warp_dst,warp_mat,warp_dst.size());
+
+    warp_dst.copyTo (this->destImage);
+
+    this->setLablePixmapWithMatNoScale (ui->dstImage,this->destImage);
+
+
+}
+
+/**
+ * @brief MainWindow::on_actionRotateWrapAffine_triggered：旋转仿射
+ */
+void MainWindow::on_actionRotateWrapAffine_triggered()
+{
+    //旋转仿射
+    Point2f srcTri[3];
+    Point2f dstTri[3];
+    Mat rot_mat(2,3,CV_32FC1);
+    Mat warp_mat(2,3,CV_32FC1);
+    Mat src,warp_dst,warp_rotate_dst;
+    //读取图像
+    this->testImage.copyTo (src);
+    warp_dst=Mat::zeros (src.rows,src.cols,src.type ());
+    //用3个点确定A仿射变换
+    srcTri[0]=Point2f(0,0);
+    srcTri[1]=Point2f(src.cols-1,0);
+    srcTri[2]=Point2f(0,src.rows-1);
+    dstTri[0]=Point2f(src.cols*0.0,src.rows*0.33);
+    dstTri[1]=Point2f(src.cols*0.85,src.rows*0.25);
+    dstTri[2]=Point2f(src.cols*0.15,src.rows*0.7);
+    warp_mat=getAffineTransform (srcTri,dstTri);
+    warpAffine (src,warp_dst,warp_mat,warp_dst.size());
+
+    //旋转矩阵
+    Point center=Point(warp_dst.cols/2,warp_dst.rows/2);
+    double angle=-50.0f;
+    double scale=0.6f;
+    rot_mat=getRotationMatrix2D (center,angle,scale);
+    warpAffine (warp_dst,warp_rotate_dst,rot_mat,warp_dst.size());
+
+
+    warp_rotate_dst.copyTo (this->destImage);
+
+    this->setLablePixmapWithMatNoScale (ui->dstImage,this->destImage);
+}

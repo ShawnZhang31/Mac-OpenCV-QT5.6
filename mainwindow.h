@@ -67,6 +67,10 @@ private slots:
 
     void on_actionTM_CCOEFF_NORMED_triggered();
 
+    void on_actionWrapAffine_triggered();
+
+    void on_actionRotateWrapAffine_triggered();
+
 public:
     Mat testImage;
     Mat destImage;
