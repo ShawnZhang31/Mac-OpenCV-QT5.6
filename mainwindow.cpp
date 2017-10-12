@@ -886,3 +886,25 @@ void MainWindow::on_actionRemapDiagontal_triggered()
     remap (this->testImage,this->destImage,map_x,map_y,CV_INTER_LINEAR,BORDER_CONSTANT,Scalar(0,0,0));
     this->setLablePixmapWithMat (ui->dstImage,this->destImage);
 }
+
+/**
+ * @brief MainWindow::on_actionTHRESH_BINARY_triggered
+ */
+void MainWindow::on_actionTHRESH_BINARY_triggered()
+{
+    //threshold=>THRESH_BINARY
+    //定义Mat，用于存储灰度图像
+    Mat srcGray;
+    Mat srcImage;
+    this->testImage.copyTo (srcImage);
+    cv::resize (srcImage,srcImage,Size(ui->dstImage->width (),ui->dstImage->height ()),0,0,3);
+    cv::cvtColor(srcImage,srcGray,COLOR_BGR2GRAY);
+    //定义参数
+    int threshold_value=128;
+    int max_BINARY_value=255;
+    int threshold_type=THRESH_BINARY;
+
+    cv::threshold (srcGray,this->destImage,threshold_value,max_BINARY_value,threshold_type);
+
+    this->setLablePixmapWithMat (ui->dstImage,srcImage);
+}

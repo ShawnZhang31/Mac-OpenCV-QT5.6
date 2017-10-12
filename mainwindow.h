@@ -83,6 +83,8 @@ private slots:
 
     void on_actionRemapDiagontal_triggered();
 
+    void on_actionTHRESH_BINARY_triggered();
+
 public:
     Mat testImage;
     Mat destImage;
