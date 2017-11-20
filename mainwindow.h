@@ -35,60 +35,6 @@ private slots:
 
     void on_actionExit_triggered();
 
-    void on_actionHistEqualize_triggered();
-
-    void on_actionContrast_triggered();
-
-    void on_actionLight_triggered();
-
-    void on_actionContrastAndLight_triggered();
-
-    void on_action_filter2D1_triggered();
-
-    void on_action_filter2D2_triggered();
-
-    void on_action_filter2D3_triggered();
-
-    void on_action_filter2D4_triggered();
-
-    void on_action_filter2D5_triggered();
-
-    void on_action_filter2D6_triggered();
-
-    void on_actionTM_SQDIFF_triggered();
-
-    void on_actionTM_SQDIFF_NORMED_triggered();
-
-    void on_actionTM_CCORR_triggered();
-
-    void on_actionTM_CCORR_NORMED_triggered();
-
-    void on_actionTM_CCOFF_triggered();
-
-    void on_actionTM_CCOEFF_NORMED_triggered();
-
-    void on_actionWrapAffine_triggered();
-
-    void on_actionRotateWrapAffine_triggered();
-
-    void on_actionRemapCopy_triggered();
-
-    void on_actionRemapX_triggered();
-
-    void on_actionRemapY_triggered();
-
-    void on_actionRemapSmall_triggered();
-
-    void on_actionRemapRotate_triggered();
-
-    void on_actionRemapDiagontal_triggered();
-
-    void on_actionTHRESH_BINARY_triggered();
-
-    //void on_actionTHRESH_BINARY_triggered();
-
-    void on_actionTHRESH_BINARY_INV_triggered();
-
 public:
     Mat testImage;
     Mat destImage;
@@ -101,8 +47,6 @@ private:
     void setLablePixmapWithMatNoScale(QLabel *lable,Mat image);
     //显示错误提示框
     void showWarningMessageBox(QString title,QString text);
-    //选择模板
-    Mat selectMatchTemplate();
 
 
 private:
