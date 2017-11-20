@@ -89,6 +89,8 @@ private slots:
 
     void on_actionTHRESH_BINARY_INV_triggered();
 
+    void on_actionTHRESH_TRUNC_triggered();
+    
 public:
     Mat testImage;
     Mat destImage;

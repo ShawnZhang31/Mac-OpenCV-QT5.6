@@ -898,13 +898,103 @@ void MainWindow::on_actionTHRESH_BINARY_triggered()
     Mat srcImage;
     this->testImage.copyTo (srcImage);
     cv::resize (srcImage,srcImage,Size(ui->dstImage->width (),ui->dstImage->height ()),0,0,3);
-    cv::cvtColor(srcImage,srcGray,COLOR_BGR2GRAY);
+    cvtColor (srcImage,srcGray,COLOR_RGB2GRAY);
     //定义参数
     int threshold_value=128;
     int max_BINARY_value=255;
     int threshold_type=THRESH_BINARY;
 
     cv::threshold (srcGray,this->destImage,threshold_value,max_BINARY_value,threshold_type);
+    cv::imshow ("dddd",this->destImage);
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
 
-    this->setLablePixmapWithMat (ui->dstImage,srcImage);
+}
+
+
+/**
+ * @brief MainWindow::on_actionTHRESH_BINARY_INV_triggered
+ */
+void MainWindow::on_actionTHRESH_BINARY_INV_triggered()
+{
+    //threshold=>THRESH_BINARY_INV
+    //定义Mat，用于存储灰度图像
+    Mat srcGray;
+    Mat srcImage;
+    this->testImage.copyTo (srcImage);
+    cv::resize (srcImage,srcImage,Size(ui->dstImage->width (),ui->dstImage->height ()),0,0,3);
+    cv::cvtColor(srcImage,srcGray,COLOR_BGR2GRAY);
+    //定义参数
+    int threshold_value=128;
+    int max_BINARY_value=255;
+    int threshold_type=THRESH_BINARY_INV;
+
+    cv::threshold (srcGray,this->destImage,threshold_value,max_BINARY_value,threshold_type);
+
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+}
+
+/**
+ * @brief MainWindow::on_actionTHRESH_TRUNC_triggered
+ */
+void MainWindow::on_actionTHRESH_TRUNC_triggered()
+{
+    //threshold=>THRESH_TRUNC
+    //定义Mat，用于存储灰度图像
+    Mat srcGray;
+    Mat srcImage;
+    this->testImage.copyTo (srcImage);
+    cv::resize (srcImage,srcImage,Size(ui->dstImage->width (),ui->dstImage->height ()),0,0,3);
+    cv::cvtColor(srcImage,srcGray,COLOR_BGR2GRAY);
+    //定义参数
+    int threshold_value=128;
+    int max_BINARY_value=255;
+    int threshold_type=THRESH_TRUNC;
+
+    cv::threshold (srcGray,this->destImage,threshold_value,max_BINARY_value,threshold_type);
+
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+}
+
+/**
+ * @brief MainWindow::on_actionTHRESH_TOZERO_triggered
+ */
+void MainWindow::on_actionTHRESH_TOZERO_triggered()
+{
+    //threshold=>THRESH_TOZERO
+    //定义Mat，用于存储灰度图像
+    Mat srcGray;
+    Mat srcImage;
+    this->testImage.copyTo (srcImage);
+    cv::resize (srcImage,srcImage,Size(ui->dstImage->width (),ui->dstImage->height ()),0,0,3);
+    cv::cvtColor(srcImage,srcGray,COLOR_BGR2GRAY);
+    //定义参数
+    int threshold_value=128;
+    int max_BINARY_value=255;
+    int threshold_type=THRESH_TOZERO;
+
+    cv::threshold (srcGray,this->destImage,threshold_value,max_BINARY_value,threshold_type);
+
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+}
+
+/**
+ * @brief MainWindow::on_actionTHRESH_TOZERO_INV_triggered
+ */
+void MainWindow::on_actionTHRESH_TOZERO_INV_triggered()
+{
+    //threshold=>THRESH_TOZERO_INV
+    //定义Mat，用于存储灰度图像
+    Mat srcGray;
+    Mat srcImage;
+    this->testImage.copyTo (srcImage);
+    cv::resize (srcImage,srcImage,Size(ui->dstImage->width (),ui->dstImage->height ()),0,0,3);
+    cv::cvtColor(srcImage,srcGray,COLOR_BGR2GRAY);
+    //定义参数
+    int threshold_value=128;
+    int max_BINARY_value=255;
+    int threshold_type=THRESH_TOZERO_INV;
+
+    cv::threshold (srcGray,this->destImage,threshold_value,max_BINARY_value,threshold_type);
+
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
 }
