@@ -37,6 +37,7 @@ void MainWindow::setLablePixmapWithMat (QLabel *lable,Mat image)
 
 void MainWindow::setLablePixmapWithGreyMat (QLabel *lable,Mat image)
 {
+    cv::resize (image,image,Size(lable->width (),lable->height ()),0,0,3);
     QImage img=QImage((const unsigned char*)(image.data),
                       image.cols,
                       image.rows,
@@ -160,7 +161,6 @@ void MainWindow::on_actionCanny_triggered()
     //Canny算子
     Mat greyImg;
     cv::cvtColor (this->testImage,greyImg,COLOR_RGB2GRAY);
-    cv::resize (greyImg,greyImg,Size(ui->dstImage->width (),ui->dstImage->height ()),0,0,3);
     cv::Canny (greyImg,greyImg,30,100);
     this->setLablePixmapWithGreyMat (ui->dstImage,greyImg);
 }
