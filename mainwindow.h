@@ -41,10 +41,17 @@ public:
 
     //私有方法
 private:
-    //使用openCV的图像来设置lable，缩放
+    //使用openCV的图像来设置lable，缩放,仅仅适用于RGB图像
     void setLablePixmapWithMat(QLabel *lable,Mat image);
-    //使用openCV的图像来设置lable，不缩放
+    //使用openCV的图像来设置lable，不缩放，仅仅适用于RGB图像
     void setLablePixmapWithMatNoScale(QLabel *lable,Mat image);
+
+    //使用openCV的图像来设置lable，缩放,仅仅适用于GRAY图像
+    void setLablePixmapWithGreyMat(QLabel *lable,Mat image);
+    //使用openCV的图像来设置lable，不缩放，仅仅适用于GRAY图像
+    void setLablePixmapWithGreyMatNoScale(QLabel *lable,Mat image);
+
+
     //显示错误提示框
     void showWarningMessageBox(QString title,QString text);
 

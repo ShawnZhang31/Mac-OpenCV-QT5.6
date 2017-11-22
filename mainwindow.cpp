@@ -35,6 +35,19 @@ void MainWindow::setLablePixmapWithMat (QLabel *lable,Mat image)
     lable->setPixmap (QPixmap::fromImage (img));
 }
 
+void MainWindow::setLablePixmapWithGreyMat (QLabel *lable,Mat image)
+{
+    cv::resize (image,image,Size(lable->width (),lable->height ()),0,0,3);
+    QImage img=QImage((const unsigned char*)(image.data),
+                      image.cols,
+                      image.rows,
+                      image.step,
+                      QImage::Format_Indexed8);
+
+    lable->clear ();
+    lable->setPixmap (QPixmap::fromImage (img));
+}
+
 /**
  * @brief MainWindow::setLablePixmapWithMatNoScale:使用openCV的图像来设置lable，不缩放
  * @param lable
@@ -49,6 +62,17 @@ void MainWindow::setLablePixmapWithMatNoScale (QLabel *lable,Mat image)
                       QImage::Format_RGB888);
     lable->clear ();
     lable->setPixmap (QPixmap::fromImage (img));
+}
+
+void MainWindow::setLablePixmapWithGreyMatNoScale (QLabel *label,Mat image)
+{
+    QImage img=QImage((const unsigned char*)(image.data),
+                      image.cols,
+                      image.rows,
+                      image.step,
+                      QImage::Format_Indexed8);
+    label->clear ();
+    label->setPixmap (QPixmap::fromImage (img));
 }
 
 /**
