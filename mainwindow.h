@@ -35,6 +35,10 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_actionSobel_triggered();
+
+    void on_actionCanny_triggered();
+
 public:
     Mat testImage;
     Mat destImage;
@@ -45,6 +49,10 @@ private:
     void setLablePixmapWithMat(QLabel *lable,Mat image);
     //使用openCV的图像来设置lable，不缩放
     void setLablePixmapWithMatNoScale(QLabel *lable,Mat image);
+    //使用openCV的灰度图像来设置lable，缩放
+    void setLablePixmapWithGreyMat(QLabel *lable,Mat image);
+    //使用openCV的图像来设置lable，不缩放
+    void setLablePixmapWithGreyMatNoScale(QLabel *lable,Mat image);
     //显示错误提示框
     void showWarningMessageBox(QString title,QString text);
 

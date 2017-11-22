@@ -103,7 +103,15 @@
     <addaction name="actionClear"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="EdgeDetection">
+    <property name="title">
+     <string>边缘特征</string>
+    </property>
+    <addaction name="actionSobel"/>
+    <addaction name="actionCanny"/>
+   </widget>
    <addaction name="File"/>
+   <addaction name="EdgeDetection"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Open_TestImage">
@@ -124,6 +132,19 @@
   <action name="actionExit">
    <property name="text">
     <string>退出</string>
+   </property>
+  </action>
+  <action name="actionSobel">
+   <property name="text">
+    <string>Sobel</string>
+   </property>
+   <property name="toolTip">
+    <string>Sobel边缘检测</string>
+   </property>
+  </action>
+  <action name="actionCanny">
+   <property name="text">
+    <string>Canny</string>
    </property>
   </action>
  </widget>
