@@ -39,6 +39,10 @@ private slots:
 
     void on_actionCanny_triggered();
 
+    void on_actionLaplacian_triggered();
+
+    void on_actionScharr_triggered();
+
 public:
     Mat testImage;
     Mat destImage;

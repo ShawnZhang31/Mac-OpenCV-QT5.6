@@ -164,3 +164,21 @@ void MainWindow::on_actionCanny_triggered()
     cv::Canny (greyImg,greyImg,30,100);
     this->setLablePixmapWithGreyMat (ui->dstImage,greyImg);
 }
+
+/**
+ * @brief MainWindow::on_actionLaplacian_triggered:Laplacian算子
+ */
+void MainWindow::on_actionLaplacian_triggered()
+{
+    cv::Laplacian (this->testImage,this->destImage,this->testImage.depth (),31);
+    this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+}
+
+/**
+ * @brief MainWindow::on_actionScharr_triggered:Scharr算子
+ */
+void MainWindow::on_actionScharr_triggered()
+{
+   cv::Scharr (this->testImage,this->destImage,this->testImage.depth (),0,1);
+   this->setLablePixmapWithMat (ui->dstImage,this->destImage);
+}

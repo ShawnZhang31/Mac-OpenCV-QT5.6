@@ -109,6 +109,8 @@
     </property>
     <addaction name="actionSobel"/>
     <addaction name="actionCanny"/>
+    <addaction name="actionLaplacian"/>
+    <addaction name="actionScharr"/>
    </widget>
    <addaction name="File"/>
    <addaction name="EdgeDetection"/>
@@ -145,6 +147,16 @@
   <action name="actionCanny">
    <property name="text">
     <string>Canny</string>
+   </property>
+  </action>
+  <action name="actionLaplacian">
+   <property name="text">
+    <string>Laplacian</string>
+   </property>
+  </action>
+  <action name="actionScharr">
+   <property name="text">
+    <string>Scharr</string>
    </property>
   </action>
  </widget>
