@@ -103,7 +103,16 @@
     <addaction name="actionClear"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="ChaoImage">
+    <property name="title">
+     <string>混沌图像</string>
+    </property>
+    <addaction name="actionBlack_White_Chao"/>
+    <addaction name="actionGrey_Chaotic"/>
+    <addaction name="actionColored_Chaotic"/>
+   </widget>
    <addaction name="File"/>
+   <addaction name="ChaoImage"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Open_TestImage">
@@ -124,6 +133,21 @@
   <action name="actionExit">
    <property name="text">
     <string>退出</string>
+   </property>
+  </action>
+  <action name="actionBlack_White_Chao">
+   <property name="text">
+    <string>黑白混沌图像</string>
+   </property>
+  </action>
+  <action name="actionGrey_Chaotic">
+   <property name="text">
+    <string>灰度混沌图像</string>
+   </property>
+  </action>
+  <action name="actionColored_Chaotic">
+   <property name="text">
+    <string>彩色混沌图像</string>
    </property>
   </action>
  </widget>

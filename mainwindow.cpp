@@ -5,6 +5,8 @@
 #include<QMessageBox>
 #include<QFileDialog>
 #include<QTextCodec>
+#include<QInputDialog>
+#include<QLineEdit>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -147,8 +149,162 @@ void MainWindow::on_actionExit_triggered()
  */
 void MainWindow::on_actionBlack_White_Chao_triggered()
 {
-    float chaotic[100*100];
+    const int M=100;
+    const int N=100;
+    float chaotic[M*N];
     double t;
     bool isOK;
-    QString text=QInputDialog::getText (NULL,tr("混沌初始值"),tr("请输入初始值"),QLineEdit::Normal,)
+    QString text=QInputDialog::getText (NULL,tr("混沌初始值"),tr("请输入初始值"),QLineEdit::Normal,"0.98",&isOK);
+
+    //混沌初始值
+    if(isOK)
+    {
+        t=text.toDouble ();
+    }
+    else
+        t=0.98;
+
+    chaotic[0]=t;
+     int i;
+
+     //生成混沌序列
+     for(i=1;i<M*N;i++)
+     {
+         chaotic[i]=1-2*chaotic[i-1]*chaotic[i-1];
+     }
+
+     //将混沌序列二值化，只有0和255两个数
+     for(i=0;i<M*N;i++)
+     {
+         if(chaotic[i]>0)
+             chaotic[i]=255;
+         else
+             chaotic[i]=0;
+     }
+
+     //建立一个混沌图像
+     Mat chaoticImg(M,N,CV_8UC1);
+
+     int flag=0;
+     //用指针方式赋值
+     for(int y=0;y<M;y++)
+     {
+         uchar* chaoticImgR=chaoticImg.ptr<uchar>(y);
+         for(int x=0;x<N;x++)
+         {
+             chaoticImgR[x]=chaotic[flag];
+             flag++;
+         }
+     }
+
+     this->setLablePixmapWithGreyMat (ui->dstImage,chaoticImg);
+
+}
+
+/**
+ * @brief MainWindow::on_actionGrey_Chaotic_triggered:灰度混沌图像
+ */
+void MainWindow::on_actionGrey_Chaotic_triggered()
+{
+    const int M=100;
+    const int N=100;
+    float chaotic[M*N];
+    double t;
+    bool isOK;
+    QString text=QInputDialog::getText (NULL,tr("混沌初始值"),tr("请输入初始值"),QLineEdit::Normal,"0.98",&isOK);
+
+    //混沌初始值
+    if(isOK)
+    {
+        t=text.toDouble ();
+    }
+    else
+        t=0.98;
+
+    chaotic[0]=t;
+     int i;
+
+     //生成混沌序列
+     for(i=1;i<M*N;i++)
+     {
+         chaotic[i]=1-2*chaotic[i-1]*chaotic[i-1];
+     }
+
+     //将混沌序列处理为256个灰度级别
+     for(i=0;i<M*N;i++)
+     {
+         chaotic[i]=((int)(chaotic[i]*1000000))%256;
+     }
+
+     //建立一个混沌图像
+     Mat chaoticImg(M,N,CV_8UC1);
+
+     int flag=0;
+     //用指针方式赋值
+     for(int y=0;y<M;y++)
+     {
+         uchar* chaoticImgR=chaoticImg.ptr<uchar>(y);
+         for(int x=0;x<N;x++)
+         {
+             chaoticImgR[x]=chaotic[flag];
+             flag++;
+         }
+     }
+
+     this->setLablePixmapWithGreyMat (ui->dstImage,chaoticImg);
+}
+
+/**
+ * @brief MainWindow::on_actionColored_Chaotic_triggered:彩色混沌图像
+ */
+void MainWindow::on_actionColored_Chaotic_triggered()
+{
+    const int M=100;
+    const int N=100;
+    float chaotic[M*N*3];
+    double t;
+    bool isOK;
+    QString text=QInputDialog::getText (NULL,tr("混沌初始值"),tr("请输入初始值"),QLineEdit::Normal,"0.98",&isOK);
+
+    //混沌初始值
+    if(isOK)
+    {
+        t=text.toDouble ();
+    }
+    else
+        t=0.98;
+
+    chaotic[0]=t;
+     int i;
+
+     //生成混沌序列
+     for(i=1;i<M*N*3;i++)
+     {
+         chaotic[i]=1-2*chaotic[i-1]*chaotic[i-1];
+     }
+
+     //将混沌序列处理为256个灰度级别
+     for(i=0;i<M*N;i++)
+     {
+         chaotic[i]=((int)(chaotic[i]*1000000))%256;
+     }
+
+     //建立一个混沌图像
+     Mat chaoticImg(M,N,CV_8UC3);
+
+     int flag=0;
+     //用指针方式赋值
+     for(int y=0;y<M;y++)
+     {
+         uchar* chaoticImgR=chaoticImg.ptr<uchar>(y);
+         for(int x=0;x<N;x++)
+         {
+             chaoticImgR[x*3]=chaotic[flag];
+             chaoticImgR[x*3+1]=chaotic[flag+M*N];
+             chaoticImgR[x*3+2]=chaotic[flag+2*M*N];
+             flag++;
+         }
+     }
+
+     this->setLablePixmapWithMat (ui->dstImage,chaoticImg);
 }

@@ -36,6 +36,12 @@ private slots:
     void on_actionExit_triggered();
 
 
+    void on_actionBlack_White_Chao_triggered();
+
+    void on_actionGrey_Chaotic_triggered();
+
+    void on_actionColored_Chaotic_triggered();
+
 public:
     Mat testImage;
     Mat destImage;
