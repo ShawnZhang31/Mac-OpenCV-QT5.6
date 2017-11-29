@@ -35,6 +35,7 @@ private slots:
 
     void on_actionExit_triggered();
 
+
 public:
     Mat testImage;
     Mat destImage;

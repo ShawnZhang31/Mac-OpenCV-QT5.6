@@ -142,3 +142,13 @@ void MainWindow::on_actionExit_triggered()
 }
 
 
+/**
+ * @brief MainWindow::on_actionBlack_White_Chao_triggered:黑白混沌图像
+ */
+void MainWindow::on_actionBlack_White_Chao_triggered()
+{
+    float chaotic[100*100];
+    double t;
+    bool isOK;
+    QString text=QInputDialog::getText (NULL,tr("混沌初始值"),tr("请输入初始值"),QLineEdit::Normal,)
+}
