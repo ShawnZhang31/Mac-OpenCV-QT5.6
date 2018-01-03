@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>630</width>
-    <height>514</height>
+    <height>496</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Chapter5</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="testImage">
@@ -99,11 +99,21 @@
      <string>文件</string>
     </property>
     <addaction name="action_Open_TestImage"/>
+    <addaction name="actionOpenCustomFile"/>
     <addaction name="action_Restore"/>
     <addaction name="actionClear"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="DigitalDistinguish">
+    <property name="title">
+     <string>数字识别</string>
+    </property>
+    <addaction name="actionImageShow"/>
+    <addaction name="actionDialogShow"/>
+    <addaction name="actionImageAndInfo"/>
+   </widget>
    <addaction name="File"/>
+   <addaction name="DigitalDistinguish"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Open_TestImage">
@@ -124,6 +134,26 @@
   <action name="actionExit">
    <property name="text">
     <string>退出</string>
+   </property>
+  </action>
+  <action name="actionOpenCustomFile">
+   <property name="text">
+    <string>打开自定义文件</string>
+   </property>
+  </action>
+  <action name="actionImageShow">
+   <property name="text">
+    <string>图像显示</string>
+   </property>
+  </action>
+  <action name="actionDialogShow">
+   <property name="text">
+    <string>对话框显示</string>
+   </property>
+  </action>
+  <action name="actionImageAndInfo">
+   <property name="text">
+    <string>图像和信息</string>
    </property>
   </action>
  </widget>
