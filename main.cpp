@@ -4,33 +4,39 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<QFile>
 using namespace std;
 
 #include <opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 #include<opencv2/imgproc/imgproc.hpp>
-using namespace cv;
+
+
+cv::Mat loadFromQrc(QString qrc,int flag=cv::IMREAD_COLOR)
+{
+    QFile file(qrc);
+    cv::Mat ima;
+    if(file.open (QIODevice::ReadOnly))
+    {
+        qint64 sz = file.size();
+        std::vector<uchar> buf(sz);
+        file.read((char*)buf.data(), sz);
+        ima = cv::imdecode(buf, flag);
+    }
+    return  ima;
+}
 
 int main(int argc, char *argv[])
 {
-    Mat image=imread ("/Users/zhangxiaomin/Desktop/111.jpeg");
-    if(image.empty ())
-    {
-        cerr<<"文件路径错误!";
-        return -1;
-    }
 
-    namedWindow ("src",WINDOW_AUTOSIZE);
-    imshow ("src",image);
-    waitKey (0);
-    destroyWindow ("src");
+    cv::Mat image=loadFromQrc (":/test/testImages/Chapter02/111.jpeg");
+    cv::imshow ("Images",image);
+    cv::waitKey (0);
+
     return 0;
 
-
-
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.show();
-
-//    return a.exec();
 }
+
+
+
+
