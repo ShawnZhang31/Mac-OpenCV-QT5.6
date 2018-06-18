@@ -70,7 +70,6 @@ int main(int argc, char *argv[])
     image1=cv::imread ("/Users/zhangxiaomin/Desktop/111.jpeg",cv::IMREAD_GRAYSCALE);
     image1.convertTo (image2,CV_32F,1/255.0,0.0);
 
-    cv::imshow ("Image33",image1);
     cv::imshow ("Image",image2);
     cv::waitKey (0);//等待按键;
 
