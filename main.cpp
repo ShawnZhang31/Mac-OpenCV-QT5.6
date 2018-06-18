@@ -9,77 +9,72 @@ using namespace std;
 #include <opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 #include<opencv2/imgproc/imgproc.hpp>
-using namespace cv;
 
-/**
-  * 鼠标点击的回调事件
-  */
-void onMouse(int event,int x,int y,int flat,void* Param)
+//测试函数，创建一幅图像
+cv::Mat functionT()
 {
-    cv::Mat *im=reinterpret_cast<cv::Mat*>(Param);
-    switch (event)
-    {
-        case cv::EVENT_LBUTTONDOWN://鼠标左键按下的事件
-        //显示像素的值(x,y)
-        std::cout<<"at ("<<x<<","<<y<<") value is:"<<static_cast<int>(im->at<uchar>(cv::Point(x,y)))<<std::endl;
-        break;
-    }
+    //创建图像
+    cv::Mat ima(500,500,CV_8U,50);
+    return  ima;
 }
 
 int main(int argc, char *argv[])
 {
-    Mat image;
-    image=imread ("/Users/zhangxiaomin/Works/A02-PrivateThings/Learning/OpenCV/Learning-OpenCV-QT5.6/Images/111.jpeg",IMREAD_GRAYSCALE);
-    if(image.empty ())
-    {
-        cerr<<"文件路径错误!";
-        return -1;
-    }
+    //创建一个240*240的新图像
+    cv::Mat image1(240,240,CV_8U,100);
+    cv::imshow ("Image",image1);//显示图像
+    cv::waitKey (0);//等待按键
 
-    //创建窗口
-    namedWindow ("src",WINDOW_AUTOSIZE);
-    //显示图像
-    imshow ("src",image);
+    //重新分配一个图像
+    image1.create (200,200,CV_8U);
+    image1=200;
 
-    //注册鼠标点击事件的回调函数
-    cv::setMouseCallback ("src",onMouse,reinterpret_cast<void*>(&image));
+    cv::imshow ("Image",image1);//显示图像
+    cv::waitKey (0);//等待
 
-    //对图像进行水平翻转
-    Mat result;
-    flip (image,result,1);
+    //创建一个红色的图像，通道次序为BGR
+    cv::Mat image2(240,320,CV_8SC3,cv::Scalar(0,0,255));
+    cv::imshow ("Image",image2);//显示图像
+    cv::waitKey (0);//等待
 
-    //在翻转后的图像上绘图
-    circle(result,//目标图像
-           cv::Point(155,110),//中心点
-           65,//半径
-           0,//颜色（这里使用黑色）
-           3);//厚度
+    //读入一幅图像
+    cv::Mat image3=cv::imread ("/Users/zhangxiaomin/Desktop/111.jpeg");
 
-    putText (result,//目标图像
-             "Test Test",//字体内容
-             cv::Point(40,200),//文本位置
-             cv::FONT_HERSHEY_PLAIN,//文本类型
-             2.0,//字体大小
-             255,//字体颜色(这里使用白色)
-             2);//字体厚度
+    //所有这些图像都指向一个数据块
+    cv::Mat image4(image3);
+    image1=image3;
 
-    namedWindow ("result",WINDOW_AUTOSIZE);
-    //显示图像
-    imshow ("result",result);
+    //这些图像都是原图像的副本
+    image3.copyTo (image2);
+    cv::Mat image5=image3.clone ();
 
+    //转换图像进行测试
+    cv::flip (image3,image3,1);
 
+    //检查哪些图像在处理过程中受到了影响
+    cv::imshow ("image 3",image3);
+    cv::imshow ("image 1",image1);
+    cv::imshow ("image 2",image2);
+    cv::imshow ("image 4",image4);
+    cv::imshow ("image 5",image5);
 
-    waitKey (0);
-    destroyWindow ("src");
+    cv::waitKey (0);//等待按键;
+
+    //从函数中回去一个灰度图像
+    cv::Mat gray=functionT();
+
+    cv::imshow ("Image",gray);
+    cv::waitKey (0);//等待按键;
+
+    //作为灰度图像读入
+    image1=cv::imread ("/Users/zhangxiaomin/Desktop/111.jpeg",cv::IMREAD_GRAYSCALE);
+    image1.convertTo (image2,CV_32F,1/255.0,0.0);
+
+    cv::imshow ("Image",image2);
+    cv::waitKey (0);//等待按键;
+
     return 0;
 
-
-
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.show();
-
-//    return a.exec();
 }
 
 
