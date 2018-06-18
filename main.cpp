@@ -13,7 +13,7 @@ using namespace cv;
 
 int main(int argc, char *argv[])
 {
-    Mat image=imread ("/Users/zhangxiaomin/Desktop/111.jpg");
+    Mat image=imread ("/Users/zhangxiaomin/Desktop/111.jpeg");
     if(image.empty ())
     {
         cerr<<"文件路径错误!";
