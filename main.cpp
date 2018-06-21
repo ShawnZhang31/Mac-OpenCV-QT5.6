@@ -12,6 +12,12 @@ using namespace std;
 #include<opencv2/imgproc/imgproc.hpp>
 
 
+/**从QRC中加载图片资源
+ * @brief loadFromQrc
+ * @param qrc
+ * @param flag
+ * @return
+ */
 cv::Mat loadFromQrc(QString qrc,int flag=cv::IMREAD_COLOR)
 {
     QFile file(qrc);
