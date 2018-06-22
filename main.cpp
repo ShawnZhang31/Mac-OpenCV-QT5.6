@@ -64,12 +64,97 @@ void salt(cv::Mat image, int n)
     }
 }
 
+/**
+ * @brief reduceColor:降低颜色空间
+ * @param image:需要降低的图片
+ * @param div:降低的倍数
+ */
+void reduceColor(cv::Mat image,int div=64)
+{
+    int nl=image.rows;//行数
+    int nc=image.cols*image.channels ();//每行元素的数量
+    for(int i=0;i<nl;i++)
+    {
+        //取得i行的地址
+        uchar* data=image.ptr (i);
+        for(int j=0;j<nc;j++)
+        {
+          data[j]=data[j]/div*div+div/2;//每个元素
+        }//一行元素处理完成
+    }
+}
+
+
+/**
+ * @brief colorReduce:使用连续图像的高效扫描法处理
+ * @param image
+ * @param div
+ */
+void colorReduce(cv::Mat image,int div=64)
+{
+//    int nl=image.rows;//行数
+
+//    //每行元素的总数
+//    int nc=image.cols*image.channels ();
+
+    if(image.isContinuous ())
+    {
+        //图像是连续的
+//        nc=nc*nl;
+//        nl=1;//装换程一个一维数组
+        image.reshape (1,//新的通道数
+                       1);//新的函数
+    }
+
+    std::cout<<"image--- nChannels="<<image.channels ()<<std::endl;
+
+        int nl=image.rows;//行数
+
+        //每行元素的总数
+        int nc=image.cols*image.channels ();
+
+    int n=static_cast<int>(log(static_cast<double>(div))/log(2.0)+0.5);
+
+    //用来截取像素的掩码
+    uchar mask=0xFF<<n;//如果div=16，那么mask=0xF0
+    uchar div2=div>>1;//div2=div/2
+
+    //对于连续图像，这个循环只执行一次
+    for(int j=0;j<nl;j++)
+    {
+        uchar* data=image.ptr<uchar>(j);
+        for(int i=0;i<nc;i++)
+        {
+            *data &=mask;
+            *data++ +=div2;
+        }//一行结束
+    }
+}
+
 int main(int argc, char *argv[])
 {
 
     cv::Mat image=loadFromQrc (":/test/testImages/Chapter02/111.jpeg");
-    salt(image,3000);
+    std::cout<<"image step="<<image.step<<std::endl;
+    std::cout<<"image elemSize="<<image.elemSize ()<<std::endl;
+    std::cout<<"image nChannels="<<image.channels ()<<std::endl;
+    if(image.isContinuous ())
+    {
+        std::cout<<"image is continuous"<<std::endl;
+    }
+    else
+    {
+        std::cout<<"image is not continuous"<<std::endl;
+    }
+//    salt(image,3000);
+
+    cv::Mat imageReduceColor=image.clone ();
+    cv::Mat imageColorReduce=image.clone ();
+    reduceColor (imageReduceColor);
+    colorReduce (imageColorReduce);
     cv::imshow ("Images",image);
+    cv::imshow ("reduceColor",imageReduceColor);
+    cv::imshow ("ColorReduce",imageColorReduce);
     cv::waitKey (0);
 
     return 0;

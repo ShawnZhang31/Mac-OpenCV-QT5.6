@@ -1,62 +1,137 @@
-# 2.1 访问像素值
-若要访问矩阵中的每个独立元素，只需要指定它的行号和列号即可。返回的对应元素可以是单个数值，也可以是多通道图像的数值向量。为了说明如何直接访问像素值，我们将创建一个简单的函数，用它在图像中加入**椒盐噪声（salt-and-pepper noise）**。
-## 2.1.1 实现方式
-在实现此椒盐噪声的方法中需要使用随机函数。关于随机函数我个人不推荐使用Windows默认的Random算法，这其实是一种伪随机数。个人更加推崇Linux的随机算法，这是一种真随机数。关于真伪随机数已经超出了本节的讨论内容，大家可以自行Google。
+#2.2 用指针扫描图像
+在处理非常庞大数量的像素的时候我们可以使用指针或者迭代器来进行高效处理。本节主要说明如何使用指针进行处理。
+## 2.2.1 准备工作
+彩色图像由三通道像素组成，每个通道表示蓝绿红三原色中一种颜色的亮度值，每个数值都是8位无符号字符类型，因此颜色总数为256\*256\*256，即超过1600万中颜色。因此为了减低分析的复杂性，有时需要减少图像中颜色的数量。一种实现方法是把RGB空间细分到大小相等的方块中。例如，如果把每个颜色数量减少到1/8，那么颜色总数就变成32\*32\*32。将旧图像中的每个颜色值划分到一个方块，该方块的中间值就是新的颜色值；新图像使用新的颜色值，颜色数就减少。
+因此，基本的减色算法很简单。假设N是减色因子，将图像中每个像素的值除以N（这里假定使用整数除法，不保留余数）。然后将结果乘以N，得到N的倍数，并且刚好不超过原始像素值。加上N/2，就等到相邻N倍数之间的中间值。
+## 2.2.2 如何实现
 ```
-#include<random> //引入随机引擎
-
 /**
-* @brief salt:椒盐噪声产生方法
-* @param image:用于生产椒盐的图像
-* @param n:椒盐迭代器的迭代次数
+* @brief reduceColor:降低颜色空间
+* @param image:需要降低的图片
+* @param div:降低的倍数
 */
-void salt(cv::Mat image, int n)
+void reduceColor(cv::Mat image,int div=64)
 {
-std::default_random_engine generator;//随机算法
-std::uniform_int_distribution<int> randomRow(0,image.rows-1);//行分布
-std::uniform_int_distribution<int> randomCol(0,image.cols-1);//列分布
-
-int i,j;//用于存储每个随机值
-for(int k=0;k<n;k++)
+int nl=image.rows;//行数
+int nc=image.cols*image.channels ();//每行元素的数量
+for(int i=0;i<nl;i++)
 {
-//随机图形的位置
-i=randomRow(generator);
-j=randomCol(generator);
-
-if(image.type ()==CV_8UC1)//灰度图像
+//取得i行的地址
+uchar* data=image.ptr (i);
+for(int j=0;j<nc;j++)
 {
-image.at<uchar>(i,j)=255;
-}
-else if(image.type ()==CV_8UC3)//彩色图像
-{
-image.at<cv::Vec3b>(i,j)[0]=255;
-image.at<cv::Vec3b>(i,j)[1]=255;
-image.at<cv::Vec3b>(i,j)[2]=255;
-}
+data[j]=data[j]/div*div+div/2;//每个元素
+}//一行元素处理完成
 }
 }
 ```
-## 2.1.2 实现原理
-利用cv::Mat的at(int x,int y)方法尅访问元素，其中x是行号，y是列号。在编译的时候必须明确返回值的类型，因为cv::Mat可以接受**任何类型的元素**，所以我们在开发的时候需要指定返回值的预期类型。正因为如此，at方法被实现成一个模板方法，在调用at方法时，你必须制定元素的类型，例如:
+## 2.2.3 实现原理
+在彩色图像中，图像数据缓冲区的前3字节表示左上角像素的三个通道的值，接下来的3字节表示第一行的第二个像素，以此类推（**注意OpenCV默认的通道次序为BGR**）。一个宽W高H的图像所需的内存块大小为WxHx3 uchars。不过出于性能上的考虑，我们会用几个额外的像素来填补行的长度。这是因为，如果函数是某个数字（例如8）的整数倍，图像处理的性能可能会提高，因此最好根据内存配置情况将数据对齐。当然，这些额外的像素既不会显示也不会被保存，它们的额外数据会被忽略。OpenCV把经过填充的行的长度指定为有效宽度。如果图像没有用额外的像素填充，那么有效宽度就等于实际的图像宽度。用cols和rows属性可得到图像的宽度和高度。与之类似，用step数据属性可得到单位是字节的有效宽度。即使图像的类型不是uchar，step仍然能提供行的字节数。我们而已通过elemSize方法（**例如一个三通道短整型的矩阵CV_16SC3,elemSize会返回6**）获得像素的大小，通过nchannels方法（**灰度图像为1，彩色图像为3**）获得图像中通道的数量，最后用total方法返回矩阵中的像素（即矩阵的条目）总数。
+## 2.2.4 扩展阅读
+1. 对连续的图像的高效扫描
+为了提高性能，可以在图像的每行末尾用额外的像素进行填充。有趣的是，在去掉填充后，图像仍可被看坐一个包含WxH像素的长一维数组。用cv::Mat的isContinuous方法可以轻松判断图像由没有被填充。如果图像没有被填充像素，他就返回true。我们还能这样测试矩阵的连续性。
+
 ```
-image.at<uchar>(i,j)=255;
-...
-image.at<cv::Vec3b>(i,j)[0]=255;
-image.at<cv::Vec3b>(i,j)[1]=255;
-image.at<cv::Vec3b>(i,j)[2]=255;
+//检查行的长度（字节数）与“列的个数*单个像素”的字节数是否相等
+image.step==image.cols*image.elemSize();
 ```
-**程序员必须保证指定的类型与矩阵内的类型是一致的。at方法不会进行任何类型转换，而且OpenCV存储通道数据的次序是蓝色、绿色和红色。因此蓝色是通道0**
-## 2.1.3 cv::Mat_模板类
-cv::Mat类的定义采用了C++模板，因此它的通用性很强。如果每次调用都必须在模板参数中指明返回类型，cv::Mat类的at方法有时会显得冗长。如果已经知道矩阵的类型，就可以用cv::Mat_类（**cv::Mat类的模板子类**）。cv::Mat_类定义了一些新的方法，但没有定义新的数据属性，因此这两个类的指针或引用可以直接相互转换。新方法中有一个operator()，可以用来直接访问矩阵的元素。因此可以这样写代码。
+
+为了确保完整性，测试时好需要检查矩阵是否只有一行；如果是，这个矩阵就是连续的。但是无论不管哪种情况，都可以用isContinuous方法检查矩阵的连续性。在一些特殊的处理算法中，你可以充分利用图像的连续性，在单个（更长）循环中处理图像。那么处理图像的函数就可以改为：
+
 ```
-//用Mat模板操作图像
-cv::Mat_<uchar> img(image);
-img(50,100)=0;//访问第50行，第100列处那个值
+void colorReduce(cv::Mat image,int div=64)
+{
+int nl=image.rows;//行数
+
+//每行元素的总数
+int nc=image.cols*image.channels ();
+
+if(image.isContinuous ())
+{
+//图像是连续的
+nc=nc*nl;
+nl=1;//装换程一个一维数组
+}
+
+int n=static_cast<int>(log(static_cast<double>(div))/log(2.0)+0.5);
+
+//用来截取像素的掩码
+uchar mask=0xFF<<n;//如果div=16，那么mask=0xF0
+uchar div2=div>>1;//div2=div/2
+
+//对于连续图像，这个循环只执行一次
+for(int j=0;j<nl;j++)
+{
+uchar* data=image.ptr<uchar>(j);
+for(int i=0;i<nc;i++)
+{
+*data &=mask;
+*data++ +=div2;
+}//一行结束
+}
+}
 ```
-在创建cv::Mat_变量时，我们就定义了它的元素类型，因此在编译时就已经知道了operator()的返回类型。使用操作符operator()和使用at方法产生的结果是完全相同的。
 
+如果连续测试结果表明图像中没有填充像素，我们就把宽度设为1，高度设为WxH，从而去除外层的循环。注意，这里还需要用reshape方法。上面的函数可以重写为：
+```
+/**
+* @brief colorReduce:使用连续图像的高效扫描法处理
+* @param image
+* @param div
+*/
+void colorReduce(cv::Mat image,int div=64)
+{
+// int nl=image.rows;//行数
 
+// //每行元素的总数
+// int nc=image.cols*image.channels ();
 
+if(image.isContinuous ())
+{
+//图像是连续的
+// nc=nc*nl;
+// nl=1;//装换程一个一维数组
+image.reshape (1,//新的通道数
+1);//新的函数
+}
 
+int nl=image.rows;//行数
 
+//每行元素的总数
+int nc=image.cols*image.channels ();
+
+int n=static_cast<int>(log(static_cast<double>(div))/log(2.0)+0.5);
+
+//用来截取像素的掩码
+uchar mask=0xFF<<n;//如果div=16，那么mask=0xF0
+uchar div2=div>>1;//div2=div/2
+
+//对于连续图像，这个循环只执行一次
+for(int j=0;j<nl;j++)
+{
+uchar* data=image.ptr<uchar>(j);
+for(int i=0;i<nc;i++)
+{
+*data &=mask;
+*data++ +=div2;
+}//一行结束
+}
+}
+```
+如果是用reshape方法修改矩阵的维数，就不需要复制内存或者重新分配内存了。
+2. 低层次指针算法
+在cv::Mat类中，图像数据时存放在无符号字符型的内存块中的。其中data属性表示内存块第一个元素的地址，它会返回一个无符号字符型的指针。如果要从图像的起点开始循环，你可以使用如下代码：
+```
+uchar* data=image.data;
+```
+利用有效宽度移动指针，可以从一行移动到下一行，代码如下所示:
+```
+data +=image.step;//下一行
+```
+用step属性可得到一行的总字节数(包括填充像素)。通常可以用下面的方法得到第j行、第i列的像素的地址：
+```
+//(j,i)像素的地址，即&image.at(j,i)
+data=image.data+j*image.step+i*image.elemSize();
+```
+然而，这种处理方法并不推荐使用
 
