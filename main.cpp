@@ -69,7 +69,11 @@ int main(int argc, char *argv[])
     cv::Mat image=loadFromQrc (":/test/testImages/Chapter02/111.jpeg");
 
     cv::Mat imageColorReduce=image.clone ();
+    const int64 start=cv::getTickCount ();
+
     colorReduce (imageColorReduce);
+    double duration=(cv::getTickCount ()-start)/cv::getTickFrequency ();
+    std::cout<<"duration:"<<duration<<std::endl;
     cv::imshow ("Images",image);
     cv::imshow ("ColorReduce",imageColorReduce);
     cv::waitKey (0);
