@@ -106,8 +106,6 @@ void colorReduce(cv::Mat image,int div=64)
                        1);//新的函数
     }
 
-    std::cout<<"image--- nChannels="<<image.channels ()<<std::endl;
-
         int nl=image.rows;//行数
 
         //每行元素的总数
