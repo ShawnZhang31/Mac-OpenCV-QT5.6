@@ -33,17 +33,37 @@ cv::Mat loadFromQrc(QString qrc,int flag=cv::IMREAD_COLOR)
     return  ima;
 }
 
+void wave(const cv::Mat &image, cv::Mat &result)
+{
+    //映射参数
+    cv::Mat srcX(image.rows,image.cols,CV_32F);
+    cv::Mat srcY(image.rows,image.cols,CV_32F);
+
+    for(int i=0;i<image.rows;i++)
+    {
+        for(int j=0;j<image.cols;j++)
+        {
+            //(i,j)像素的位置
+            srcX.at<float>(i,j)=j;//保持在同一列
+            srcY.at<float>(i,j)=i+5*sin(j/10.0);//原来在第i行修昂素，现在根据一个正玄曲线移动;
+
+        }
+    }
+
+    cv::remap (image,result,srcX,srcY,cv::INTER_LINEAR);
+}
+
+
 
 int main(int argc, char *argv[])
 {
 
     cv::Mat image1=loadFromQrc (":/test/testImages/Chapter02/111.jpeg");
-    cv::Mat image2=loadFromQrc (":/test/testImages/Chapter02/timg.jpg");
 
     cv::Mat result;
-    cv::addWeighted (image1,0.7,image2,0.9,0.0,result);
+    wave(image1,result);
+    cv::imshow ("remap",result);
 
-    cv::imshow ("add",result);
 
 
 
