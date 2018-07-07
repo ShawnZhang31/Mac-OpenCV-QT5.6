@@ -38,16 +38,29 @@ cv::Mat loadFromQrc(QString qrc,int flag=cv::IMREAD_COLOR)
 int main(int argc, char *argv[])
 {
 
-    //1. 创建图像处理器对象,并指定参数
-    ColorDetector cdetect(50,224,254,200);
-
-    //2. 读取输入的图像
+    //读取输入的图像
     cv::Mat image=loadFromQrc (":/test/testImages/Chapter02/111.jpeg");
 
-    //3. 处理并显示结果
-    cv::namedWindow ("result");
-//    cv::Mat result=cdetect.process (image);
-    cv::Mat result=cdetect.processWithFloodFill (image,cv::Point(200,100));
+    cv::Rect rectangle(300,300,400,400);
+    cv::Mat result; //分割结果
+    cv::Mat bgModel,fgModel;    // 模型
+
+    //GrabCut分割算法
+    cv::grabCut (image,                     // 输入图像
+                 result,                    //分割结果
+                 rectangle,                 //包含前景的矩形
+                 bgModel,fgModel,           //模型
+                 5,                         //迭代次数
+                 cv::GC_INIT_WITH_RECT);    //使用矩形
+
+    //取得标记为可能属于前景的像素
+    cv::compare (result,cv::GC_PR_FGD,result,cv::CMP_EQ);
+
+    //生成输出图像
+    cv::Mat foreground(image.size(),CV_8UC3,cv::Scalar(255,255,255));
+    image.copyTo (foreground,result);
+
+    cv::imshow ("image",image);
     cv::imshow ("result",result);
 
     cv::waitKey (0);
