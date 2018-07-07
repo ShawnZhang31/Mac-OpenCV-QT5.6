@@ -12,6 +12,7 @@ using namespace std;
 #include<opencv2/highgui/highgui.hpp>
 #include<opencv2/imgproc/imgproc.hpp>
 
+#include "colordetector.h"
 
 /**
  * @brief loadFromQrc:从QRC中加载图片资源
@@ -33,42 +34,23 @@ cv::Mat loadFromQrc(QString qrc,int flag=cv::IMREAD_COLOR)
     return  ima;
 }
 
-void wave(const cv::Mat &image, cv::Mat &result)
-{
-    //映射参数
-    cv::Mat srcX(image.rows,image.cols,CV_32F);
-    cv::Mat srcY(image.rows,image.cols,CV_32F);
-
-    for(int i=0;i<image.rows;i++)
-    {
-        for(int j=0;j<image.cols;j++)
-        {
-            //(i,j)像素的位置
-            srcX.at<float>(i,j)=j;//保持在同一列
-            srcY.at<float>(i,j)=i+5*sin(j/10.0);//原来在第i行修昂素，现在根据一个正玄曲线移动;
-
-        }
-    }
-
-    cv::remap (image,result,srcX,srcY,cv::INTER_LINEAR);
-}
-
-
 
 int main(int argc, char *argv[])
 {
 
-    cv::Mat image1=loadFromQrc (":/test/testImages/Chapter02/111.jpeg");
+    //1. 创建图像处理器对象,并指定参数
+    ColorDetector cdetect(50,224,254,200);
 
-    cv::Mat result;
-    wave(image1,result);
-    cv::imshow ("remap",result);
+    //2. 读取输入的图像
+    cv::Mat image=loadFromQrc (":/test/testImages/Chapter02/111.jpeg");
 
-
-
+    //3. 处理并显示结果
+    cv::namedWindow ("result");
+//    cv::Mat result=cdetect.process (image);
+    cv::Mat result=cdetect.processWithFloodFill (image,cv::Point(200,100));
+    cv::imshow ("result",result);
 
     cv::waitKey (0);
-
     return 0;
 
 }
