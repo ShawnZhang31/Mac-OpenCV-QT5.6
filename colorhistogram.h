@@ -13,6 +13,8 @@ private:
 public:
     ColorHistogram();
     cv::Mat getHistogram(const cv::Mat &image);
+    cv::Mat getHueHistogram(const cv::Mat &image, int minSaturation = 0);
+    void setSize(int size);
 };
 
 #endif // COLORHISTOGRAM_H

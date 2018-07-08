@@ -17,14 +17,16 @@ SOURCES += main.cpp\
     colordetector.cpp \
     histogram1d.cpp \
     loadimagefromqrc.cpp \
-    colorhistogram.cpp
+    colorhistogram.cpp \
+    contentfinder.cpp
 
 HEADERS  += mainwindow.h \
     colordetector.h \
     histogram1d.h \
     shawnopencv.h \
     loadimagefromqrc.h \
-    colorhistogram.h
+    colorhistogram.h \
+    contentfinder.h
 
 FORMS    += mainwindow.ui
 
