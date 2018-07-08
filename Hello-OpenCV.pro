@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     histogram1d.cpp \
     loadimagefromqrc.cpp \
     colorhistogram.cpp \
-    contentfinder.cpp
+    contentfinder.cpp \
+    imagecomparator.cpp
 
 HEADERS  += mainwindow.h \
     colordetector.h \
@@ -26,7 +27,8 @@ HEADERS  += mainwindow.h \
     shawnopencv.h \
     loadimagefromqrc.h \
     colorhistogram.h \
-    contentfinder.h
+    contentfinder.h \
+    imagecomparator.h
 
 FORMS    += mainwindow.ui
 
