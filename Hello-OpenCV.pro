@@ -14,10 +14,17 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    colordetector.cpp
+    colordetector.cpp \
+    histogram1d.cpp \
+    loadimagefromqrc.cpp \
+    colorhistogram.cpp
 
 HEADERS  += mainwindow.h \
-    colordetector.h
+    colordetector.h \
+    histogram1d.h \
+    shawnopencv.h \
+    loadimagefromqrc.h \
+    colorhistogram.h
 
 FORMS    += mainwindow.ui
 

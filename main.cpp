@@ -6,52 +6,46 @@
 #include<vector>
 #include<QFile>
 #include<random> //引入随机引擎
+
+#include<shawnopencv.h>
+#include<loadimagefromqrc.h>
+#include<histogram1d.h>
+
 using namespace std;
 
-#include <opencv2/core/core.hpp>
-#include<opencv2/highgui/highgui.hpp>
-#include<opencv2/imgproc/imgproc.hpp>
-
-#include "colordetector.h"
-
-/**
- * @brief loadFromQrc:从QRC中加载图片资源
- * @param qrc:qrc资源的相对路径
- * @param flag:cv::imread的读入标记
- * @return:cv::Mat
- */
-cv::Mat loadFromQrc(QString qrc,int flag=cv::IMREAD_COLOR)
-{
-    QFile file(qrc);
-    cv::Mat ima;
-    if(file.open (QIODevice::ReadOnly))
-    {
-        qint64 sz = file.size();
-        std::vector<uchar> buf(sz);
-        file.read((char*)buf.data(), sz);
-        ima = cv::imdecode(buf, flag);
-    }
-    return  ima;
-}
 
 
 int main(int argc, char *argv[])
 {
 
-    //读取输入的图像
-    cv::Mat image=loadFromQrc (":/test/testImages/Chapter02/111.jpeg");
+    //读取输入的图像,以黑白形式打开
+    LoadImageFromQrc qrcImRead;
+    cv::Mat image=qrcImRead(":/test/testImages/Chapter02/111.jpeg",cv::IMREAD_GRAYSCALE);
 
-    cv::Mat hsv;
-    cv::cvtColor (image,hsv,CV_BGR2HSV);
+    //直方图对象
+    Histogram1D h;
 
-    std::vector<cv::Mat> channels;
-    cv::split (hsv,channels);
+    //计算直方图
+    cv::Mat histo=h.getHistogram (image);
 
-    cv::imshow ("channel-0",channels[0]);
-    cv::imshow ("channel-1",channels[1]);
-    cv::imshow ("channel-2",channels[2]);
+    //循环遍历每个箱子
+    int sum=0;
+    for(int i=0;i<256;i++)
+    {
+        cout<<"Value-"<<i<<" = "<<histo.at<float>(i)<<endl;
+        sum+=i;
+    }
+    cout<<"Total Pixels Count="<<sum<<endl;
 
-    cv::imshow ("hsv",hsv);
+    cv::imshow ("image",image);
+    cv::imshow ("Histogram",h.getHistogramImage (image,3));
+
+    cv::Mat thresholded;
+    cv::threshold (image,thresholded,120,255,cv::THRESH_TRUNC);
+    cv::imshow ("Threshold",thresholded);
+
+
+
 
     cv::waitKey (0);
     return 0;
