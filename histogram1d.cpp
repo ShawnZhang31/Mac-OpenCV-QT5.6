@@ -95,4 +95,18 @@ cv::Mat Histogram1D::applyLookUp(const cv::Mat& image, const cv::Mat& lookup)
     return result;
 }
 
+cv::Mat Histogram1D::applyBackProject(const cv::Mat& image,const cv::Mat& histogram)
+{
+    cv::Mat result;
+    cv::calcBackProject (&image,
+                         1,
+                         channels,
+                         histogram,
+                         result,
+                         ranges,
+                         255.0);
+
+    return  result;
+}
+
 

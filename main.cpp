@@ -25,26 +25,20 @@ int main(int argc, char *argv[])
     //直方图对象
     Histogram1D h;
 
-    //均衡之前的直方图
-    cv::Mat beHist=h.getHistogramImage (image,2);
+    //创建感兴趣区域
+    cv::Mat imageROI;
+    imageROI=image(cv::Rect(350,100,420,200));
 
-    //对图像执行直方图均衡化处理
-    cv::Mat result;
-    cv::equalizeHist (image,result);
+    cv::Mat hist=h.getHistogram (imageROI);
 
-    //均衡化之后的直方图
-    cv::Mat afHist=h.getHistogramImage (result,2);
+    cv::normalize(hist,hist,1.0);
 
-    //显示结果
-    cv::imshow ("image",image);
-    cv::imshow ("beHist",beHist);
+    cv::Mat result=h.applyBackProject (image,hist);
+
+
+    cv::threshold (result,result,50,255,cv::THRESH_BINARY);
+
     cv::imshow ("result",result);
-    cv::imshow ("afHist",afHist);
-
-
-
-
-
 
     cv::waitKey (0);
     return 0;
