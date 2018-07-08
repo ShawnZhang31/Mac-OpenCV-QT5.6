@@ -41,31 +41,20 @@ int main(int argc, char *argv[])
     //读取输入的图像
     cv::Mat image=loadFromQrc (":/test/testImages/Chapter02/111.jpeg");
 
-    cv::Rect rectangle(300,300,400,400);
-    cv::Mat result; //分割结果
-    cv::Mat bgModel,fgModel;    // 模型
+    cv::Mat hsv;
+    cv::cvtColor (image,hsv,CV_BGR2HSV);
 
-    //GrabCut分割算法
-    cv::grabCut (image,                     // 输入图像
-                 result,                    //分割结果
-                 rectangle,                 //包含前景的矩形
-                 bgModel,fgModel,           //模型
-                 5,                         //迭代次数
-                 cv::GC_INIT_WITH_RECT);    //使用矩形
+    std::vector<cv::Mat> channels;
+    cv::split (hsv,channels);
 
-    //取得标记为可能属于前景的像素
-    cv::compare (result,cv::GC_PR_FGD,result,cv::CMP_EQ);
+    cv::imshow ("channel-0",channels[0]);
+    cv::imshow ("channel-1",channels[1]);
+    cv::imshow ("channel-2",channels[2]);
 
-    //生成输出图像
-    cv::Mat foreground(image.size(),CV_8UC3,cv::Scalar(255,255,255));
-    image.copyTo (foreground,result);
-
-    cv::imshow ("image",image);
-    cv::imshow ("result",result);
+    cv::imshow ("hsv",hsv);
 
     cv::waitKey (0);
     return 0;
-
 }
 
 
