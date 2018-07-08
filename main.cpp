@@ -25,15 +25,23 @@ int main(int argc, char *argv[])
     //直方图对象
     Histogram1D h;
 
-    //创建一个图像反转的查找表
-    cv::Mat lut(1,256,CV_8U);
+    //均衡之前的直方图
+    cv::Mat beHist=h.getHistogramImage (image,2);
 
-    for(int i=0;i<256;i++)
-    {
-        lut.at<uchar>(i)=255-i;
-    }
+    //对图像执行直方图均衡化处理
+    cv::Mat result;
+    cv::equalizeHist (image,result);
 
-    cv::imshow ("LUT",h.applyLookUp (image,lut));
+    //均衡化之后的直方图
+    cv::Mat afHist=h.getHistogramImage (result,2);
+
+    //显示结果
+    cv::imshow ("image",image);
+    cv::imshow ("beHist",beHist);
+    cv::imshow ("result",result);
+    cv::imshow ("afHist",afHist);
+
+
 
 
 
