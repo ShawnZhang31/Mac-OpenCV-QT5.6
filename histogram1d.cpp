@@ -78,4 +78,21 @@ cv::Mat Histogram1D::getImageOfHistogram(const cv::Mat &hist, int zoom)
     return histImg;
 }
 
+/**
+ * @brief Histogram1D::applyLookUp
+ * @param image
+ * @param lookup
+ * @return
+ */
+cv::Mat Histogram1D::applyLookUp(const cv::Mat& image, const cv::Mat& lookup)
+{
+    //输出图像
+    cv::Mat result;
+
+    //应用查找表
+    cv::LUT (image,lookup,result);
+
+    return result;
+}
+
 

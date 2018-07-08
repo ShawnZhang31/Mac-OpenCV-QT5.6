@@ -25,24 +25,15 @@ int main(int argc, char *argv[])
     //直方图对象
     Histogram1D h;
 
-    //计算直方图
-    cv::Mat histo=h.getHistogram (image);
+    //创建一个图像反转的查找表
+    cv::Mat lut(1,256,CV_8U);
 
-    //循环遍历每个箱子
-    int sum=0;
     for(int i=0;i<256;i++)
     {
-        cout<<"Value-"<<i<<" = "<<histo.at<float>(i)<<endl;
-        sum+=i;
+        lut.at<uchar>(i)=255-i;
     }
-    cout<<"Total Pixels Count="<<sum<<endl;
 
-    cv::imshow ("image",image);
-    cv::imshow ("Histogram",h.getHistogramImage (image,3));
-
-    cv::Mat thresholded;
-    cv::threshold (image,thresholded,120,255,cv::THRESH_TRUNC);
-    cv::imshow ("Threshold",thresholded);
+    cv::imshow ("LUT",h.applyLookUp (image,lut));
 
 
 

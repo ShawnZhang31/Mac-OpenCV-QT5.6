@@ -15,6 +15,7 @@ public:
     Histogram1D();
     cv::Mat getHistogram(const cv::Mat &image);
     cv::Mat getHistogramImage(const cv::Mat &image, int zoom = 1);
+    cv::Mat applyLookUp(const cv::Mat &image, const cv::Mat &lookup);
 };
 
 #endif // HISTOGRAM1D_H
