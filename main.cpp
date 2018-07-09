@@ -26,27 +26,19 @@ int main(int argc, char *argv[])
 
     cv::Mat image=cv::imread (filePath.toStdString (),0);
 
-    cv::Mat kernel=cv::Mat();//核-只能使用单通道
+    //闭合图像
+    cv::Mat element5(5,5,CV_8U,cv::Scalar(1));
+    cv::Mat closed;
+    cv::morphologyEx (image,closed,cv::MORPH_CLOSE,element5);
 
-    //腐蚀图像
-    cv::Mat eroded;//目标图像
-    cv::erode (image,eroded,kernel);
+    //开图像
+    cv::Mat opened;
+    cv::morphologyEx (image,opened,cv::MORPH_OPEN,element5);
 
-    cv::Mat fanImage=~image;
+    cv::imshow ("image",image);
+    cv::imshow ("Closed",closed);
 
-    //膨胀图像
-    cv::Mat dilated;    //目标图像
-    cv::dilate (image,dilated,kernel);
-
-    cv::imshow ("Image",image);
-    cv::imshow ("Eroded Image",eroded);
-
-    cv::Mat fanDilated;
-    cv::dilate (fanImage,fanDilated,cv::Mat());
-
-    cv::imshow ("fan Image",~fanDilated);
-
-    cv::imshow ("Dilated Image",dilated);
+    cv::imshow ("Opened",opened);
 
 
     cv::waitKey (0);
