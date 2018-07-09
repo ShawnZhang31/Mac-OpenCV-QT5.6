@@ -102,23 +102,59 @@ int main(int argc, char *argv[])
 
  /***************************Chapter4-6 用均值平移算法查找目标**************************************/
 
-    //装载参考图像
+ /***************************Chapter4-8*****************************************/
+//    //装载参考图像
+//    QString fileDir=IMAGE_DIR;
+//    QString fileName=fileDir+"/bike55.bmp";
+//    cv::Mat image=cv::imread (fileName.toStdString (),0);
+
+//    int xo=97,yo=112,width=25,height=30;
+//    cv::Rect rectROI=cv::Rect(xo,yo,width,height);
+//    cv::rectangle (image,rectROI,cv::Scalar(0,0,255));
+//    cv::Mat imageROI=image(rectROI);
+
+//    //计算累加值
+//    //返回一个多通道图像下的Scalar数值
+//    cv::Scalar sum=cv::sum (imageROI);
+//    cout<<"sum="<<sum<<endl;
+
+//    //计算积分图像
+//    cv::Mat integralImage;
+//    cv::integral (image,integralImage,CV_32S);
+
+//    cv::imshow ("image",integralImage);
+
+//    int sumInt = integralImage.at<int>(yo+height,xo+width)-
+//                 integralImage.at<int>(yo+height,xo)-
+//                 integralImage.at<int>(yo,xo+width)+
+//                 integralImage.at<int>(yo,xo);
+
+//    cout<<"sumInt="<<sumInt<<endl;
+/***************************Chapter4-8*****************************************/
+
+/***************************Chapter4-8：1.自适应的阈值化*****************************************/
     QString fileDir=IMAGE_DIR;
-    QString fileName=fileDir+"/baboon01.jpg";
-    cv::Mat refImg=cv::imread (fileName.toStdString ());
+    QString fileName=fileDir+"/book.jpg";
 
-    QString inputFileName=fileDir+"/beach.jpg";
-    cv::Mat inputImg=cv::imread (inputFileName.toStdString ());
+    cv::Mat book = cv::imread (fileName.toStdString (),0);
 
-    cv::imshow ("refImg",refImg);
-    cv::imshow ("inputImg",inputImg);
+    //使用固定阈值
+    cv::Mat binnaryFixed;
+    cv::threshold (book,binnaryFixed,70,255,cv::THRESH_BINARY);
 
-    ImageComparator comparator;
-    comparator.setReferenceImage (refImg);
-    double result=comparator.compare (inputImg);
+    //计算积分图像
+    cv::Mat ibook;
+    cv::integral (book,ibook,CV_32S);
 
-    cout<<"inputImg has "<<result<<" content is samilar whit refImg"<<endl;
+    cv::Mat adaptiveImg;
+    cv::adaptiveThreshold (book,adaptiveImg,255,cv::ADAPTIVE_THRESH_MEAN_C,cv::THRESH_BINARY,21,10);
 
+    cv::imshow ("book",book);
+    cv::imshow ("binaryFixed",binnaryFixed);
+    cv::imshow ("adaptiveImg",adaptiveImg);
+
+
+/***************************Chapter4-8：1.自适应的阈值化*****************************************/
 
     cv::waitKey (0);
     return 0;
