@@ -21,24 +21,21 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    QString fileName="binary.bmp";
+    QString fileName="boldt.jpg";
     QString filePath=IMAGE_DIR+fileName;
 
     cv::Mat image=cv::imread (filePath.toStdString (),0);
 
-    //闭合图像
-    cv::Mat element5(5,5,CV_8U,cv::Scalar(1));
-    cv::Mat closed;
-    cv::morphologyEx (image,closed,cv::MORPH_CLOSE,element5);
+    //梯度运算
+    cv::Mat result;
+    cv::morphologyEx (image, result, cv::MORPH_GRADIENT,cv::Mat());
 
-    //开图像
-    cv::Mat opened;
-    cv::morphologyEx (image,opened,cv::MORPH_OPEN,element5);
+    cv::imshow ("GRADIENT",~result);
 
-    cv::imshow ("image",image);
-    cv::imshow ("Closed",closed);
-
-    cv::imshow ("Opened",opened);
+    //顶帽运算
+    cv::Mat topHat;
+    cv::morphologyEx (image, topHat, cv::MORPH_BLACKHAT, cv::Mat());
+    cv::imshow ("TOPHAT",topHat);
 
 
     cv::waitKey (0);
