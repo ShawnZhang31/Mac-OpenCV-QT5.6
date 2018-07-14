@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     loadimagefromqrc.cpp \
     colorhistogram.cpp \
     contentfinder.cpp \
-    imagecomparator.cpp
+    imagecomparator.cpp \
+    watershedsegmenter.cpp
 
 HEADERS  += mainwindow.h \
     colordetector.h \
@@ -28,7 +29,8 @@ HEADERS  += mainwindow.h \
     loadimagefromqrc.h \
     colorhistogram.h \
     contentfinder.h \
-    imagecomparator.h
+    imagecomparator.h \
+    watershedsegmenter.h
 
 FORMS    += mainwindow.ui
 
